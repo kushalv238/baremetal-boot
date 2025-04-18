@@ -1,20 +1,8 @@
-# megs: 128
-# romimage: file=/usr/share/bochs/BIOS-bochs-legacy, address=0xffff0000
-# vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
-# floppya: 1_44=build/main_floppy.img, status=inserted
-# boot: floppy
-# mouse: enabled=0
-# display_library: sdl2
-# log: bochslog.txt
+megs: 128
 
-
-config_interface: win32config
-display_library: win32
 cpu: model=p4_willamette, count=1, ips=50000000, reset_on_triple_fault=1, ignore_bad_msrs=1
 cpu: cpuid_limit_winnt=0
-
-# the MEGS: directive has been replaced with:
-memory: guest=512, host=256, block_size=512
+display_library: win32 # FIXME: does not run on sdl2 lib, load with the bochs gui only
 
 romimage: file=/usr/share/bochs/BIOS-bochs-latest,  address=0xffff0000
 vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
@@ -22,9 +10,10 @@ vgaromimage: file=/usr/share/bochs/VGABIOS-lgpl-latest
 pci: enabled=1, chipset=i440fx
 clock: sync=none, time0=local
 
+romimage: file=$BXSHARE\BIOS-bochs-latest
+vgaromimage: file=$BXSHARE\VGABIOS-lgpl-latest.bin
+floppya: 1_44=build/main_floppy.img, status=inserted
+boot: floppy
 
-# eventually you will want to use a hard drive or cdrom
-
-ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
-ata0-master: type=disk, mode=flat, path="build/main_floppy.img"
-# ata0-slave: type=cdrom, path="sample.iso", status=inserted
+mouse: enabled=0
+log: bochslog.txt
